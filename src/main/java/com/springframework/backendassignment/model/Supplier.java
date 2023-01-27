@@ -20,7 +20,7 @@ public class Supplier {
     private Long id;
     private String supplierName;
 
-    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "supplier")
+    @OneToMany(mappedBy = "supplier")
     @JsonIgnore
     private List<InventoryData> inventoryData = new ArrayList<>();
 
