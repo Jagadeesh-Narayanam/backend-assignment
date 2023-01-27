@@ -6,8 +6,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
-
 public interface InventoryDataRepository extends JpaRepository<InventoryData,Long> {
     @Query("select i from InventoryData i where i.supplier in (select s.id from Supplier s where s.id=?1) and i.stock>0")
     Page<InventoryData> findBySupplierOnly(Long id, PageRequest of);

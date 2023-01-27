@@ -5,8 +5,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.springframework.backendassignment.model.Product;
@@ -14,7 +12,6 @@ import com.springframework.backendassignment.model.Supplier;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.springframework.cglib.core.Local;
 import org.springframework.web.multipart.MultipartFile;
 import com.springframework.backendassignment.model.InventoryData;
 
@@ -23,7 +20,6 @@ public class CSVHelper {
     public static String TYPE = "text/csv";
 
     public static boolean hasCSVFormat(MultipartFile file) {
-
         if (!TYPE.equals(file.getContentType())) {
             return false;
         }
@@ -38,14 +34,13 @@ public class CSVHelper {
              CSVParser csvParser = new CSVParser(fileReader,
                      CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
 
-            List<InventoryData> inventoryDataList = new ArrayList<InventoryData>();
+            List<InventoryData> inventoryDataList = new ArrayList<>();
             List<Product> productsList = new ArrayList<>();
             List<Supplier> suppliersList = new ArrayList<>();
 
             Iterable<CSVRecord> csvRecords = csvParser.getRecords();
             for (CSVRecord csvRecord : csvRecords) {
                 Product product;
-//                product.setCode(csvRecord.get(0));
                 String code = csvRecord.get(0);
                 if (productMap.containsKey(code)) {
                     product = productMap.get(code);
@@ -67,7 +62,6 @@ public class CSVHelper {
                     supplier = new Supplier(csvRecord.get("supplier"));
                     supplierMap.put(supplier.getSupplierName(), supplier);
                 }
-
 
                 InventoryData inventoryData = new InventoryData(
                         product,

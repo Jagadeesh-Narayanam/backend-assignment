@@ -1,7 +1,6 @@
 package com.springframework.backendassignment.services;
 
 import com.springframework.backendassignment.helpers.CSVHelper;
-import com.springframework.backendassignment.model.InventoryData;
 import com.springframework.backendassignment.repositories.InventoryDataRepository;
 import com.springframework.backendassignment.repositories.ProductRepository;
 import com.springframework.backendassignment.repositories.SupplierRepository;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j

@@ -5,8 +5,6 @@ import com.springframework.backendassignment.services.SearchService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("api/csv")
 public class SupplierController {
@@ -33,13 +31,4 @@ public class SupplierController {
         }
 
     }
-//    @GetMapping("supplier/name/{supplier_name}")
-//    Page<InventoryData> getInventories(@PathVariable String supplier_name,
-//                                       @RequestParam(defaultValue = "") String productName,
-//                                       @RequestParam(defaultValue = "false") Boolean notExpired,
-//                                       @RequestParam(defaultValue = "0")int offset,
-//                                       @RequestParam(defaultValue = "5") int pageSize){
-//        Long supplierId = searchService.getSupplierIdBySupplierName(supplier_name);
-//        return searchService.getInventoryBySupplierId(supplierId,productName,notExpired,offset,pageSize);
-//    }
 }

@@ -20,7 +20,6 @@ public class InventoryData
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
-    @JoinColumn(name = "product_id")
     private Product product;
 
     private String batch;
@@ -32,7 +31,6 @@ public class InventoryData
     private Date expiry;
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
     public InventoryData(Product product, String batch, Integer stock, Integer deal, Integer free, Float mrp, Float rate, Supplier supplier) {

@@ -5,13 +5,9 @@ import com.springframework.backendassignment.repositories.InventoryDataRepositor
 import com.springframework.backendassignment.repositories.ProductRepository;
 import com.springframework.backendassignment.repositories.SupplierRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.logging.Logger;
 
 @Slf4j
 @Service

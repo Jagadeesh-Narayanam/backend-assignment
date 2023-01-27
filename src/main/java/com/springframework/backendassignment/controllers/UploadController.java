@@ -27,7 +27,7 @@ public class UploadController {
                 e.printStackTrace();
             }
         }
-        return "No action";
+        return "Error: File Not Uploaded";
     }
 
 }
