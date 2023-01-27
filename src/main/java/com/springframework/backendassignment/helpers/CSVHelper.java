@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.springframework.backendassignment.model.Product;
@@ -12,6 +14,7 @@ import com.springframework.backendassignment.model.Supplier;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.cglib.core.Local;
 import org.springframework.web.multipart.MultipartFile;
 import com.springframework.backendassignment.model.InventoryData;
 
@@ -26,8 +29,10 @@ public class CSVHelper {
         }
         return true;
     }
-    static Map<String,Product> productMap = new HashMap<>();
-    static Map<String,Supplier> supplierMap = new HashMap<>();
+
+    static Map<String, Product> productMap = new HashMap<>();
+    static Map<String, Supplier> supplierMap = new HashMap<>();
+
     public static List[] csvToInventories(InputStream is) {
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
              CSVParser csvParser = new CSVParser(fileReader,
@@ -74,7 +79,7 @@ public class CSVHelper {
                         Float.parseFloat(csvRecord.get("rate")),
                         supplier
                 );
-                if(csvRecord.get("exp").matches("([0-9]{2})-([0-9]{2})-([0-9]{4})")) {
+                if (csvRecord.get("exp").matches("([0-9]{2})-([0-9]{2})-([0-9]{4})")) {
                     inventoryData.setExpiry(new SimpleDateFormat("dd-MM-yyyy").parse(csvRecord.get("exp")));
                 }
                 supplier.getInventoryData().add(inventoryData);
@@ -85,43 +90,14 @@ public class CSVHelper {
                 inventoryDataList.add(inventoryData);
             }
 
-            return new List[]{productsList,suppliersList,inventoryDataList};
+            return new List[]{productsList, suppliersList, inventoryDataList};
 
 
-
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
 
-
-//                InventoryData inventoryData = new InventoryData();
-//
-//                inventoryData.setCode(csvRecord.get(0));
-//                inventoryData.setName(csvRecord.get("name"));
-//                inventoryData.setBatch(csvRecord.get("batch"));
-//                inventoryData.setStock(Integer.parseInt(csvRecord.get("stock")));
-//                inventoryData.setDeal(Integer.parseInt(csvRecord.get("deal")));
-//                inventoryData.setFree(Integer.parseInt(csvRecord.get("free")));
-//                inventoryData.setMrp(Float.parseFloat(csvRecord.get("mrp")));
-//                inventoryData.setRate(Float.parseFloat(csvRecord.get("rate")));
-//                if(csvRecord.get("exp").matches("([0-9]{2})-([0-9]{2})-([0-9]{4})")) {
-//                    inventoryData.setExpiry(new SimpleDateFormat("dd-MM-yyyy").parse(csvRecord.get("exp")));
-//                }
-//                inventoryData.setCompany(csvRecord.get("company"));
-//                inventoryData.setSupplier(csvRecord.get("supplier"));
-//
-//                inventoryDataList.add(inventoryData);
-//            }
-//            return inventoryDataList;
-//        } catch (IOException e) {
-//            throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
-//        }
-//        catch(ParseException e){
-//            throw new RuntimeException();
-//        }
     }
-
 }

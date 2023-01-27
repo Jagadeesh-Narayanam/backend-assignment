@@ -4,10 +4,16 @@ import com.springframework.backendassignment.model.InventoryData;
 import com.springframework.backendassignment.repositories.InventoryDataRepository;
 import com.springframework.backendassignment.repositories.ProductRepository;
 import com.springframework.backendassignment.repositories.SupplierRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+@Slf4j
 @Service
 public class SearchService {
     private SupplierRepository supplierRepository;
@@ -20,11 +26,26 @@ public class SearchService {
         this.productRepository = productRepository;
     }
 
-    public List<InventoryData> getInventoryBySupplierId(Long id,String productName,Boolean notExpired){
+    public Page<InventoryData> getInventoryBySupplierId(Long id, String productName, Boolean notExpired,int offset,int pageSize){
 //        System.out.println(inventoryDataRepository.findBySupplierId(id));
-        return inventoryDataRepository.findBySupplierId(id,productName,notExpired);
+        if(productName.equals("") && notExpired==false){
+            log.info("search by supplier only");
+            return inventoryDataRepository.findBySupplierOnly(id, PageRequest.of(offset,pageSize));
+        }
+        else if(!productName.equals("") && notExpired==false){
+            log.info("search by supplier and productname");
+            return inventoryDataRepository.findBySupplierAndProduct(id,productName,PageRequest.of(offset,pageSize));
+        }
+        else if(notExpired==true && productName.equals("")){
+            log.info("search by supplier and not expired");
+            return inventoryDataRepository.findBySupplierAndExpiredStatus(id,notExpired,PageRequest.of(offset,pageSize));
+        }
+        else {
+            log.info("search by all params");
+            return inventoryDataRepository.findBySupplierWithAllParams(id, productName, notExpired,PageRequest.of(offset,pageSize));
+        }
     }
-    public List<InventoryData> getInventoryBySupplierName(String supplierName){
-        return inventoryDataRepository.findInventoryDataBySupplier_SupplierName(supplierName);
+    public Long getSupplierIdBySupplierName(String supplierName){
+        return supplierRepository.findSupplierIdBySupplierName(supplierName);
     }
 }

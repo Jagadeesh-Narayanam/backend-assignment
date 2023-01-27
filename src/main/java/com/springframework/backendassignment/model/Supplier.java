@@ -16,14 +16,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Supplier implements Serializable {
+public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String supplierName;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "supplier")
-//    @JsonBackReference
+    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "supplier")
+
     @JsonIgnore
     private List<InventoryData> inventoryData = new ArrayList<>();
 
@@ -31,3 +31,4 @@ public class Supplier implements Serializable {
         this.supplierName = supplierName;
     }
 }
+

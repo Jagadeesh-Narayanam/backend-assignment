@@ -5,6 +5,7 @@ import com.springframework.backendassignment.model.InventoryData;
 import com.springframework.backendassignment.repositories.InventoryDataRepository;
 import com.springframework.backendassignment.repositories.ProductRepository;
 import com.springframework.backendassignment.repositories.SupplierRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class CSVService {
     private InventoryDataRepository inventoryDataRepository;
@@ -31,9 +33,7 @@ public class CSVService {
             productRepository.saveAll(outputLists[0]);
             supplierRepository.saveAll(outputLists[1]);
             inventoryDataRepository.saveAll(outputLists[2]);
-//            List<InventoryData> inventoryDataList = outputLists.get(0);
-//            inventoryDataRepository.saveAll(outputLists.get(0));
-            System.out.println("File Uploaded");
+            log.info("File Uploaded");
 
         }
         catch (IOException e) {

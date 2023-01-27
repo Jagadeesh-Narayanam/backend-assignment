@@ -6,15 +6,15 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-public class InventoryData implements Serializable
+public class InventoryData
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +33,6 @@ public class InventoryData implements Serializable
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")
-//    @JsonManagedReference
-//    @JsonIgnore
     private Supplier supplier;
 
     public InventoryData(Product product, String batch, Integer stock, Integer deal, Integer free, Float mrp, Float rate, Supplier supplier) {
